@@ -4,6 +4,8 @@ import dev.michaelfarrant.simplestore.command.create.CreateProductCommand;
 import dev.michaelfarrant.simplestore.command.create.CreateProductCommandHandler;
 import dev.michaelfarrant.simplestore.query.byid.ProductByIdQuery;
 import dev.michaelfarrant.simplestore.query.byid.ProductByIdQueryHandler;
+import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQuery;
+import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQueryHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +22,15 @@ public class ProductController {
 
     private final CreateProductCommandHandler createProductCommandHandler;
     private final ProductByIdQueryHandler productByIdQueryHandler;
+    private final SearchSuggestionQueryHandler searchSuggestionQueryHandler;
 
     public ProductController(
             CreateProductCommandHandler createProductCommandHandler,
-            ProductByIdQueryHandler productByIdQueryHandler) {
+            ProductByIdQueryHandler productByIdQueryHandler,
+            SearchSuggestionQueryHandler searchSuggestionQueryHandler) {
         this.createProductCommandHandler = createProductCommandHandler;
         this.productByIdQueryHandler = productByIdQueryHandler;
+        this.searchSuggestionQueryHandler = searchSuggestionQueryHandler;
     }
 
     @PostMapping
@@ -47,5 +52,12 @@ public class ProductController {
             return ResponseEntity.ok(document.get());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("search-suggestions")
+    public ResponseEntity<ProductSearchSuggestionResponse> searchSuggestion(@RequestParam(name = "searchTerm") String searchTerm){
+        SearchSuggestionQuery query = new SearchSuggestionQuery(searchTerm);
+        ProductSearchSuggestionResponse response = searchSuggestionQueryHandler.handleQuery(query);
+        return ResponseEntity.ok(response);
     }
 }

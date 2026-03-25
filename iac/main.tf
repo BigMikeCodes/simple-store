@@ -36,11 +36,16 @@ resource "opensearch_index" "product_idx" {
         "type" : "keyword"
       },
       "name" : {
-        "type" : "search_as_you_type"
+        "type" : "search_as_you_type",
+        "fields" : {
+          "raw" : {
+            "type" : "keyword"
+          }
+        }
       },
       "tags" : {
         "type" : "keyword"
-      }
+      },
       "description" : {
         "type" : "text"
       }
