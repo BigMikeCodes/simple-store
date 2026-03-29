@@ -4,6 +4,8 @@ import dev.michaelfarrant.simplestore.command.create.CreateProductCommand;
 import dev.michaelfarrant.simplestore.command.create.CreateProductCommandHandler;
 import dev.michaelfarrant.simplestore.query.byid.ProductByIdQuery;
 import dev.michaelfarrant.simplestore.query.byid.ProductByIdQueryHandler;
+import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQuery;
+import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQueryHandler;
 import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQuery;
 import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQueryHandler;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +25,17 @@ public class ProductController {
     private final CreateProductCommandHandler createProductCommandHandler;
     private final ProductByIdQueryHandler productByIdQueryHandler;
     private final SearchSuggestionQueryHandler searchSuggestionQueryHandler;
+    private final SearchProductsQueryHandler searchProductsQueryHandler;
 
     public ProductController(
             CreateProductCommandHandler createProductCommandHandler,
             ProductByIdQueryHandler productByIdQueryHandler,
-            SearchSuggestionQueryHandler searchSuggestionQueryHandler) {
+            SearchSuggestionQueryHandler searchSuggestionQueryHandler,
+            SearchProductsQueryHandler searchProductsQueryHandler) {
         this.createProductCommandHandler = createProductCommandHandler;
         this.productByIdQueryHandler = productByIdQueryHandler;
         this.searchSuggestionQueryHandler = searchSuggestionQueryHandler;
+        this.searchProductsQueryHandler = searchProductsQueryHandler;
     }
 
     @PostMapping
@@ -60,4 +65,17 @@ public class ProductController {
         ProductSearchSuggestionResponse response = searchSuggestionQueryHandler.handleQuery(query);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("search")
+    public ResponseEntity<Void> searchProducts(
+            @RequestParam(name = "searchTerm") String searchTerm,
+            @RequestParam(name = "isSuggestion", required = false) Optional<Boolean> isSuggestion) {
+
+        boolean isSuggestBool = isSuggestion.orElse(false);
+        SearchProductsQuery query = new SearchProductsQuery(searchTerm, isSuggestBool);
+
+        searchProductsQueryHandler.handleQuery(query);
+        return ResponseEntity.ok().build();
+    }
+
 }
