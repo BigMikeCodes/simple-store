@@ -6,6 +6,7 @@ import dev.michaelfarrant.simplestore.query.byid.ProductByIdQuery;
 import dev.michaelfarrant.simplestore.query.byid.ProductByIdQueryHandler;
 import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQuery;
 import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQueryHandler;
+import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsResponse;
 import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQuery;
 import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQueryHandler;
 import org.springframework.http.ResponseEntity;
@@ -67,15 +68,15 @@ public class ProductController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<Void> searchProducts(
+    public ResponseEntity<SearchProductsResponse> searchProducts(
             @RequestParam(name = "searchTerm") String searchTerm,
             @RequestParam(name = "isSuggestion", required = false) Optional<Boolean> isSuggestion) {
 
         boolean isSuggestBool = isSuggestion.orElse(false);
-        SearchProductsQuery query = new SearchProductsQuery(searchTerm, isSuggestBool);
+        SearchProductsQuery query = new SearchProductsQuery(searchTerm, isSuggestBool, 10);
 
-        searchProductsQueryHandler.handleQuery(query);
-        return ResponseEntity.ok().build();
+        SearchProductsResponse response = searchProductsQueryHandler.handleQuery(query);
+        return ResponseEntity.ok(response);
     }
 
 }
