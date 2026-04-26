@@ -3,6 +3,7 @@ package dev.michaelfarrant.simplestore.query.searchproducts;
 import dev.michaelfarrant.simplestore.Indexes;
 import dev.michaelfarrant.simplestore.ProductDocument;
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.query_dsl.MultiMatchQuery;
 import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.SearchResponse;
 import org.slf4j.Logger;
@@ -22,12 +23,15 @@ public class SearchProductsQueryHandler {
 
     public SearchProductsResponse handleQuery(SearchProductsQuery query) {
 
+        MultiMatchQuery multiMatch = MultiMatchQuery.of(m -> m
+                .fields("name^3", "name._2gram", "name._3gram","description", "tags")
+                .fuzziness("AUTO")
+                .query(query.term()));
+
         SearchRequest request = new SearchRequest.Builder()
                 .index(Indexes.PRODUCTS)
                 .size(query.pageSize())
-                .query(q -> q.multiMatch(
-                        m -> m.fields("name", "description", "tags")
-                                .query(query.term())))
+                .query(multiMatch.toQuery())
                 .build();
 
         try {
