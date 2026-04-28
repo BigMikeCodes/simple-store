@@ -19,3 +19,8 @@ services:
     ports:
       - "9200:9200"
       - "9600:9600"
+
+  valkey:
+    image: valkey/valkey:9.0.3
+    ports:
+      - "6379:6379"
