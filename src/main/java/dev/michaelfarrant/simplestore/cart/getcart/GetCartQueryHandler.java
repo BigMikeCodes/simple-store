@@ -1,12 +1,19 @@
 package dev.michaelfarrant.simplestore.cart.getcart;
 
+import dev.michaelfarrant.simplestore.Indexes;
+import dev.michaelfarrant.simplestore.ProductDocument;
 import dev.michaelfarrant.simplestore.cart.CartResponse;
 import dev.michaelfarrant.simplestore.cart.Item;
 import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch.core.MgetResponse;
+import org.opensearch.client.opensearch.core.get.GetResult;
+import org.opensearch.client.opensearch.core.mget.MultiGetResponseItem;
+import org.slf4j.Logger;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -14,6 +21,7 @@ import java.util.UUID;
 @Service
 public class GetCartQueryHandler {
 
+    private final Logger logger = org.slf4j.LoggerFactory.getLogger(GetCartQueryHandler.class);
     private final RedisTemplate<String, Integer> redisTemplate;
     private final OpenSearchClient openSearchClient;
 
@@ -28,6 +36,26 @@ public class GetCartQueryHandler {
         return "cart:" + cartId.toString();
     }
 
+    private List<ProductDocument> getItemsFromOpenSearch(Set<String> productIds) {
+
+        List<String> ids = productIds.stream().toList();
+
+        try {
+            MgetResponse<ProductDocument> response = openSearchClient
+                    .mget(builder -> builder.index(Indexes.PRODUCTS).ids(ids), ProductDocument.class);
+
+            return response.docs().stream()
+                    .filter(MultiGetResponseItem::isResult)
+                    .map(MultiGetResponseItem::result)
+                    .filter(GetResult::found)
+                    .map(GetResult::source)
+                    .toList();
+
+        } catch (IOException exception) {
+            logger.error("Error fetching products from OpenSearch", exception);
+            return List.of();
+        }
+    }
 
     public CartResponse handle(GetCartQuery query) {
 
@@ -35,20 +63,12 @@ public class GetCartQueryHandler {
         HashOperations<String, String, Integer> hashOps = redisTemplate.opsForHash();
         var entries = hashOps.entries(cartHashKey);
 
-        Set<String> keys = entries.keySet();
+        Set<String> productIds = entries.keySet();
+        List<ProductDocument> documents = getItemsFromOpenSearch(productIds);
 
-        // get products from opensearch
-
-
-        // join everything together & return
-
-
-        var items = entries.entrySet().stream().map(entry -> {
-            String productIdStr = entry.getKey();
-            Integer quantity = entry.getValue();
-
-            return new Item("Some product", UUID.fromString(productIdStr), quantity);
-        }).toList();
+        List<Item> items = documents.stream()
+                .map(doc -> new Item(doc.name(), doc.id(), entries.get(doc.id().toString())))
+                .toList();
 
         return new CartResponse(items);
     }
