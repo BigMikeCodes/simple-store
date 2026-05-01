@@ -1,7 +1,7 @@
 package dev.michaelfarrant.simplestore.command.create;
 
-import dev.michaelfarrant.simplestore.Indexes;
-import dev.michaelfarrant.simplestore.ProductDocument;
+import dev.michaelfarrant.simplestore.storefront.catalogue.Indexes;
+import dev.michaelfarrant.simplestore.storefront.catalogue.ProductDocument;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch.core.IndexRequest;
 import org.springframework.stereotype.Service;
