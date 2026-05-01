@@ -20,10 +20,14 @@ public class SetItemQuantityCommandHandler {
 
     public void handle(SetItemQuantityCommand command) {
 
-        String cartHashKey  = cartHashKey(command.userId());
+        String cartHashKey = cartHashKey(command.userId());
         String productIdStr = command.productId().toString();
-        redisTemplate.opsForHash().put(cartHashKey, productIdStr, String.valueOf(command.quantity()));
 
+        if (command.quantity() == 0) {
+            redisTemplate.opsForHash().delete(cartHashKey, productIdStr);
+        } else {
+            redisTemplate.opsForHash().put(cartHashKey, productIdStr, String.valueOf(command.quantity()));
+        }
     }
 
 }
