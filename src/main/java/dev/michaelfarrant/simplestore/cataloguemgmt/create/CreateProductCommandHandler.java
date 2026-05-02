@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.command.create;
+package dev.michaelfarrant.simplestore.cataloguemgmt.create;
 
 import dev.michaelfarrant.simplestore.storefront.catalogue.Indexes;
 import dev.michaelfarrant.simplestore.storefront.catalogue.ProductDocument;
