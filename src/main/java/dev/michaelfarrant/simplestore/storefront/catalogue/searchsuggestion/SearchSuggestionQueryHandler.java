@@ -1,6 +1,6 @@
 package dev.michaelfarrant.simplestore.storefront.catalogue.searchsuggestion;
 
-import dev.michaelfarrant.simplestore.storefront.catalogue.Indexes;
+import dev.michaelfarrant.simplestore.config.opensearch.Indexes;
 import dev.michaelfarrant.simplestore.storefront.catalogue.ProductSearchSuggestionResponse;
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.aggregations.StringTermsBucket;

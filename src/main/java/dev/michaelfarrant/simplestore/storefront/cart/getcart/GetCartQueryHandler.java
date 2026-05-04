@@ -1,6 +1,6 @@
 package dev.michaelfarrant.simplestore.storefront.cart.getcart;
 
-import dev.michaelfarrant.simplestore.storefront.catalogue.Indexes;
+import dev.michaelfarrant.simplestore.config.opensearch.Indexes;
 import dev.michaelfarrant.simplestore.storefront.catalogue.ProductDocument;
 import dev.michaelfarrant.simplestore.storefront.cart.CartResponse;
 import dev.michaelfarrant.simplestore.storefront.cart.Item;

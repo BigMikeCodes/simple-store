@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.storefront.catalogue;
+package dev.michaelfarrant.simplestore.config.opensearch;
 
 public class Indexes {
 
