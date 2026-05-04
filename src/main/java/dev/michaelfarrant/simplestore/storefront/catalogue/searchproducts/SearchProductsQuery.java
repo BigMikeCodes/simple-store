@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.query.searchproducts;
+package dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts;
 
 public record SearchProductsQuery(
         String term,

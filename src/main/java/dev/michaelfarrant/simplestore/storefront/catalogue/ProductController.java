@@ -1,14 +1,14 @@
-package dev.michaelfarrant.simplestore;
+package dev.michaelfarrant.simplestore.storefront.catalogue;
 
-import dev.michaelfarrant.simplestore.command.create.CreateProductCommand;
-import dev.michaelfarrant.simplestore.command.create.CreateProductCommandHandler;
-import dev.michaelfarrant.simplestore.query.byid.ProductByIdQuery;
-import dev.michaelfarrant.simplestore.query.byid.ProductByIdQueryHandler;
-import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQuery;
-import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsQueryHandler;
-import dev.michaelfarrant.simplestore.query.searchproducts.SearchProductsResponse;
-import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQuery;
-import dev.michaelfarrant.simplestore.query.searchsuggestion.SearchSuggestionQueryHandler;
+import dev.michaelfarrant.simplestore.cataloguemgmt.create.CreateProductCommand;
+import dev.michaelfarrant.simplestore.cataloguemgmt.create.CreateProductCommandHandler;
+import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQuery;
+import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQueryHandler;
+import dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts.SearchProductsQuery;
+import dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts.SearchProductsQueryHandler;
+import dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts.SearchProductsResponse;
+import dev.michaelfarrant.simplestore.storefront.catalogue.searchsuggestion.SearchSuggestionQuery;
+import dev.michaelfarrant.simplestore.storefront.catalogue.searchsuggestion.SearchSuggestionQueryHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

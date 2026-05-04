@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.query.byid;
+package dev.michaelfarrant.simplestore.storefront.catalogue.byid;
 
 import java.util.UUID;
 

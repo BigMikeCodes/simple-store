@@ -1,6 +1,6 @@
-package dev.michaelfarrant.simplestore.query.searchproducts;
+package dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts;
 
-import dev.michaelfarrant.simplestore.ProductDocument;
+import dev.michaelfarrant.simplestore.storefront.catalogue.ProductDocument;
 
 import java.util.List;
 

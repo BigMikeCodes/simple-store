@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore;
+package dev.michaelfarrant.simplestore.storefront.catalogue;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
