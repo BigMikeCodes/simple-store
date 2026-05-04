@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.cataloguemgmt.create;
+package dev.michaelfarrant.simplestore.cataloguemgmt;
 
 import dev.michaelfarrant.simplestore.config.opensearch.Indexes;
 import dev.michaelfarrant.simplestore.storefront.catalogue.ProductDocument;

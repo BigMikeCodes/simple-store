@@ -1,7 +1,7 @@
 package dev.michaelfarrant.simplestore.storefront.catalogue;
 
-import dev.michaelfarrant.simplestore.cataloguemgmt.create.CreateProductCommand;
-import dev.michaelfarrant.simplestore.cataloguemgmt.create.CreateProductCommandHandler;
+import dev.michaelfarrant.simplestore.cataloguemgmt.CreateProductCommand;
+import dev.michaelfarrant.simplestore.cataloguemgmt.CreateProductCommandHandler;
 import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQuery;
 import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQueryHandler;
 import dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts.SearchProductsQuery;

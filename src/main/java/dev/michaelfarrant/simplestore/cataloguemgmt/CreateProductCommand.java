@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.cataloguemgmt.create;
+package dev.michaelfarrant.simplestore.cataloguemgmt;
 
 import java.util.Set;
 
