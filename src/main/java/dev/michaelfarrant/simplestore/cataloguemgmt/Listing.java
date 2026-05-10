@@ -44,7 +44,12 @@ public class Listing {
         this.description = description;
     }
 
-    public Listing fromProduct(Item item){
+    public boolean canPublish(){
+        // Todo expand this, should have a better return to allow FE decisions.
+        return !items.isEmpty();
+    }
+
+    public static Listing fromItem(Item item){
 
         UUID id = item.id();
         OffsetDateTime now = OffsetDateTime.now();
