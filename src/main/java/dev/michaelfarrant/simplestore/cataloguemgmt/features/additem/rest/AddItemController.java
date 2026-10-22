@@ -3,8 +3,10 @@ package dev.michaelfarrant.simplestore.cataloguemgmt.features.additem.rest;
 import dev.michaelfarrant.simplestore.cataloguemgmt.features.additem.AddItemCommand;
 import dev.michaelfarrant.simplestore.cataloguemgmt.features.additem.AddItemCommandHandler;
 import dev.michaelfarrant.simplestore.cataloguemgmt.rest.CatalogueManagementBaseController;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
@@ -19,14 +21,18 @@ public class AddItemController extends CatalogueManagementBaseController {
     }
 
     @PostMapping("items")
-    public ResponseEntity<Void> addItem(AddItemRequest request) {
+    public ResponseEntity<Void> addItem(
+            @Valid
+            @RequestBody
+            AddItemRequest request) {
+
         AddItemCommand command = toCommand(request);
         UUID result = commandHandler.handleCommand(command);
         return ResponseEntity.ok().build();
     }
 
     private static AddItemCommand toCommand(AddItemRequest request) {
-        return new AddItemCommand(request.title(), request.description());
+        return new AddItemCommand(request.title(), request.description(), request.code());
     }
 
 }

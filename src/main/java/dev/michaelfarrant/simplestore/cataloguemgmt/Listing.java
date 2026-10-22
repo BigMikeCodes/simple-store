@@ -11,13 +11,21 @@ public class Listing {
     private String description;
     private final OffsetDateTime created;
     private final List<ListingItem> items;
+    private ListingStatus status;
 
-    public Listing(UUID id, String title, String description, OffsetDateTime created, List<ListingItem> items) {
+    public Listing(
+            UUID id,
+            String title,
+            String description,
+            OffsetDateTime created,
+            List<ListingItem> items,
+            ListingStatus status) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.created = created;
         this.items = items;
+        this.status = status;
     }
 
     public UUID id() {
@@ -49,15 +57,7 @@ public class Listing {
         return !items.isEmpty();
     }
 
-    public static Listing fromItem(Item item){
-
-        UUID id = item.id();
-        OffsetDateTime now = OffsetDateTime.now();
-        ListingItem listingItem = ListingItem.fromItem(item, id);
-        List<ListingItem> items = List.of(listingItem);
-
-        return new Listing(id, item.title(), "", now, items);
+    public ListingStatus status() {
+        return status;
     }
-
-
 }

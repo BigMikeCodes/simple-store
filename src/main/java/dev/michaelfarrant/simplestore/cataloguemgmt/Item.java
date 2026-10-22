@@ -6,19 +6,18 @@ import java.util.UUID;
 public class Item {
 
     private final UUID id;
+    private final String code;
+
     private String title;
     private String description;
     private OffsetDateTime created;
 
-    public Item(UUID id, String title, String description, OffsetDateTime created) {
+    public Item(UUID id, String title, String description, String code, OffsetDateTime created) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.code = code;
         this.created = created;
-    }
-
-    public Item(UUID id) {
-        this.id = id;
     }
 
     public OffsetDateTime created() {
@@ -49,10 +48,14 @@ public class Item {
         this.description = description;
     }
 
-    public static Item newItem(String title, String description){
+    public String code() {
+        return code;
+    }
+
+    public static Item newItem(String title, String description, String code) {
         UUID id = UUID.randomUUID();
         OffsetDateTime now = OffsetDateTime.now();
-        return new Item(id, title, description, now);
+        return new Item(id, title, description, code, now);
     }
 
 }

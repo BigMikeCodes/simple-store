@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.cataloguemgmt.features.listingfromitem.rest;
+package dev.michaelfarrant.simplestore.cataloguemgmt.features.createlisting.rest;
 
 import dev.michaelfarrant.simplestore.cataloguemgmt.rest.CatalogueManagementBaseController;
 import org.springframework.web.bind.annotation.RestController;

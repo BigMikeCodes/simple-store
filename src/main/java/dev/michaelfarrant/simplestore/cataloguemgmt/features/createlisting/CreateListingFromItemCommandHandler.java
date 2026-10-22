@@ -1,4 +1,4 @@
-package dev.michaelfarrant.simplestore.cataloguemgmt.features.listingfromitem;
+package dev.michaelfarrant.simplestore.cataloguemgmt.features.createlisting;
 
 import dev.michaelfarrant.simplestore.cataloguemgmt.Item;
 import dev.michaelfarrant.simplestore.cataloguemgmt.Listing;
