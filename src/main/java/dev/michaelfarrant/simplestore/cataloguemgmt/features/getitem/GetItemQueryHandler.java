@@ -20,7 +20,7 @@ public class GetItemQueryHandler implements QueryHandler<GetItemQuery, Optional<
 
         final String selectItem = """
             SELECT id, title, description, code
-            FROM public."item"
+            FROM item
             WHERE id = :itemId
             """;
 
@@ -33,7 +33,5 @@ public class GetItemQueryHandler implements QueryHandler<GetItemQuery, Optional<
                             rs.getString(4)
                     );
                 }).optional();
-
-        return Optional.empty();
     }
 }

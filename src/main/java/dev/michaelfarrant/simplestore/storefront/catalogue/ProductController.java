@@ -1,7 +1,5 @@
 package dev.michaelfarrant.simplestore.storefront.catalogue;
 
-import dev.michaelfarrant.simplestore.cataloguemgmt.CreateProductCommand;
-import dev.michaelfarrant.simplestore.cataloguemgmt.CreateProductCommandHandler;
 import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQuery;
 import dev.michaelfarrant.simplestore.storefront.catalogue.byid.ProductByIdQueryHandler;
 import dev.michaelfarrant.simplestore.storefront.catalogue.searchproducts.SearchProductsQuery;
@@ -12,40 +10,24 @@ import dev.michaelfarrant.simplestore.storefront.catalogue.searchsuggestion.Sear
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("api/products")
 public class ProductController {
 
-    private final CreateProductCommandHandler createProductCommandHandler;
     private final ProductByIdQueryHandler productByIdQueryHandler;
     private final SearchSuggestionQueryHandler searchSuggestionQueryHandler;
     private final SearchProductsQueryHandler searchProductsQueryHandler;
 
     public ProductController(
-            CreateProductCommandHandler createProductCommandHandler,
             ProductByIdQueryHandler productByIdQueryHandler,
             SearchSuggestionQueryHandler searchSuggestionQueryHandler,
             SearchProductsQueryHandler searchProductsQueryHandler) {
-        this.createProductCommandHandler = createProductCommandHandler;
         this.productByIdQueryHandler = productByIdQueryHandler;
         this.searchSuggestionQueryHandler = searchSuggestionQueryHandler;
         this.searchProductsQueryHandler = searchProductsQueryHandler;
-    }
-
-    @PostMapping
-    public ResponseEntity<Void> createProduct(@RequestBody CreateProductRequest request) {
-        CreateProductCommand command = new CreateProductCommand(request.name(), request.description(), request.tags());
-        UUID id = createProductCommandHandler.handleCommand(command);
-
-        URI uri = linkTo(methodOn(ProductController.class).getProductById(id)).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("{productId}")
