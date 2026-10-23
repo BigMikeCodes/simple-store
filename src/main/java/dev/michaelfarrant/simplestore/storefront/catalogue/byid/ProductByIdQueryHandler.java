@@ -26,7 +26,7 @@ public class ProductByIdQueryHandler {
 
         try {
             GetResponse<ProductDocument>  response = get(query.id());
-            return Optional.of(response.source());
+            return Optional.ofNullable(response.source());
 
         } catch (IOException exception) {
             logger.error("Error fetching product", exception);

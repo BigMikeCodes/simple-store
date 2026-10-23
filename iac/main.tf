@@ -26,8 +26,11 @@ provider "opensearch" {
 resource "opensearch_index" "product_idx" {
   name = "product-v1"
   aliases = jsonencode({
-    "products" : {
-      "is_write_index" : true
+    products = {
+      is_write_index = true
+    },
+    storefront-ro = {
+      is_write_index = false
     }
   })
   mappings = jsonencode({
@@ -52,3 +55,4 @@ resource "opensearch_index" "product_idx" {
     }
   })
 }
+

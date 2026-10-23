@@ -1,0 +1,50 @@
+// Integration events published by catalogue management to the "catalogue.listing.events" exchange.
+//
+// Evolution rules: never renumber or reuse a field number (mark removed ones `reserved`), only add
+// fields, and introduce a v2 package (with new routing keys) for anything that isn't wire compatible.
+syntax = "proto3";
+
+package simplestore.cataloguemgmt.listing.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option java_multiple_files = true;
+option java_package = "dev.michaelfarrant.simplestore.contracts.cataloguemgmt.listing.v1";
+
+// Envelope for every listing event. UUIDs are carried as their canonical string form.
+message ListingEvent {
+  string event_id = 1;
+  string listing_id = 2;
+  google.protobuf.Timestamp occurred_at = 3;
+  // Listing aggregate version after the change; consumers use it to discard stale or duplicate events.
+  int64 listing_version = 4;
+
+  oneof payload {
+    ListingPublished published = 10;
+    ListingUpdated updated = 11;
+    ListingWithdrawn withdrawn = 12;
+  }
+}
+
+message ListingPublished {
+  string title = 1;
+  string description = 2;
+  repeated PublishedItem items = 3;
+}
+
+message PublishedItem {
+  string item_id = 1;
+  string code = 2;
+  string title = 3;
+  string description = 4;
+  int32 quantity = 5;
+}
+
+// A minor correction to an already published listing.
+message ListingUpdated {
+  string title = 1;
+  string description = 2;
+}
+
+message ListingWithdrawn {
+}
