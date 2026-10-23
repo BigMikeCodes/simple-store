@@ -34,10 +34,11 @@ public class WithdrawListingCommandHandler implements CommandHandler<WithdrawLis
                 .orElseThrow(() -> new ListingNotFoundException(command.listingId()));
 
         listing.withdraw();
-        listingRepository.save(listing);
+        int version = listingRepository.save(listing);
 
         if (listing.published().isPresent()) {
-            eventPublisher.publish(new ListingWithdrawn(UUID.randomUUID(), listing.id(), listing.withdrawn().orElseThrow()));
+            eventPublisher.publish(new ListingWithdrawn(
+                    UUID.randomUUID(), listing.id(), version, listing.withdrawn().orElseThrow()));
         }
         return null;
     }

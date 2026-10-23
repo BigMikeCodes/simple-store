@@ -9,6 +9,7 @@ import java.util.UUID;
 public record ListingUpdated(
         UUID eventId,
         UUID listingId,
+        long listingVersion,
         OffsetDateTime occurredAt,
         String title,
         String description) implements ListingEvent {

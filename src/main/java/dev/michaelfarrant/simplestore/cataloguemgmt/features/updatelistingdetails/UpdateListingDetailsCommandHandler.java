@@ -35,11 +35,11 @@ public class UpdateListingDetailsCommandHandler implements CommandHandler<Update
                 .orElseThrow(() -> new ListingNotFoundException(command.listingId()));
 
         listing.updateDetails(command.title(), command.description());
-        listingRepository.save(listing);
+        int version = listingRepository.save(listing);
 
         if (listing.status() == ListingStatus.ACTIVE) {
             eventPublisher.publish(new ListingUpdated(
-                    UUID.randomUUID(), listing.id(), listing.updated(), listing.title(), listing.description()));
+                    UUID.randomUUID(), listing.id(), version, listing.updated(), listing.title(), listing.description()));
         }
         return null;
     }

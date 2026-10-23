@@ -45,13 +45,13 @@ public class PublishListingCommandHandler implements CommandHandler<PublishListi
                 .orElseThrow(() -> new ListingNotFoundException(command.listingId()));
 
         listing.publish();
-        listingRepository.save(listing);
+        int version = listingRepository.save(listing);
 
-        eventPublisher.publish(toEvent(listing));
+        eventPublisher.publish(toEvent(listing, version));
         return null;
     }
 
-    private ListingPublished toEvent(Listing listing) {
+    private ListingPublished toEvent(Listing listing, int version) {
         List<UUID> itemIds = listing.items().stream().map(ListingItem::itemId).toList();
         Map<UUID, Item> itemsById = itemRepository.getAll(itemIds).stream()
                 .collect(Collectors.toMap(Item::id, Function.identity()));
@@ -68,6 +68,7 @@ public class PublishListingCommandHandler implements CommandHandler<PublishListi
         return new ListingPublished(
                 UUID.randomUUID(),
                 listing.id(),
+                version,
                 listing.published().orElseThrow(),
                 listing.title(),
                 listing.description(),

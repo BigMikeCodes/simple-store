@@ -7,6 +7,7 @@ import java.util.UUID;
 public record ListingPublished(
         UUID eventId,
         UUID listingId,
+        long listingVersion,
         OffsetDateTime occurredAt,
         String title,
         String description,

@@ -6,5 +6,6 @@ import java.util.UUID;
 public record ListingWithdrawn(
         UUID eventId,
         UUID listingId,
+        long listingVersion,
         OffsetDateTime occurredAt) implements ListingEvent {
 }

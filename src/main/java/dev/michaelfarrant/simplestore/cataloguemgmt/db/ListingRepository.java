@@ -66,13 +66,20 @@ public class ListingRepository {
         });
     }
 
-    public void save(Listing listing) {
+    /**
+     * @return the listing's version after the save
+     */
+    public int save(Listing listing) {
+        int version;
         if (listing.isNew()) {
             insert(listing);
+            version = 1;
         } else {
             update(listing);
+            version = listing.version() + 1;
         }
         replaceItems(listing);
+        return version;
     }
 
     private void insert(Listing listing) {
